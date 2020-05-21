@@ -1,0 +1,51 @@
+make
+
+./tester -input m_input.arr $1
+./tester -vec m_input_vector.arr $1 $2
+
+echo =============================================================
+echo List - Implementation Results [using the same b0]:
+echo =============================================================
+if [ "$#" = 2 ]; then
+	./ex2 m_input.arr m_input_vector.arr m_eigen_vector.arr -list > /dev/null 2>&1
+	./ex2 m_input.arr m_input_vector.arr m_eigen_vector.arr -list
+	./tester -check m_input.arr m_input_vector.arr m_eigen_vector.arr -list
+else
+	valgrind --log-fd=1 ./ex2 m_input.arr m_input_vector.arr m_eigen_vector.arr -list
+fi
+
+echo =============================================================
+echo Array - Implementation Results [using the same b0]:
+echo =============================================================
+if [ "$#" = 2 ]; then
+	./ex2 m_input.arr m_input_vector.arr m_eigen_vector.arr -array > /dev/null 2>&1
+	./ex2 m_input.arr m_input_vector.arr m_eigen_vector.arr -array
+	./tester -check m_input.arr m_input_vector.arr m_eigen_vector.arr -array
+else
+	valgrind --log-fd=1 ./ex2 m_input.arr m_input_vector.arr m_eigen_vector.arr -array
+fi
+
+echo =============================================================
+echo List - Implementation Results [using random initial vector]:
+echo =============================================================
+if [ "$#" = 2 ]; then
+	./ex2 m_input.arr m_eigen_vector.arr -list > /dev/null 2>&1
+	./ex2 m_input.arr m_eigen_vector.arr -list
+	./tester -check m_input.arr m_eigen_vector.arr -list
+else
+	valgrind --log-fd=1 ./ex2 m_input.arr m_eigen_vector.arr -list
+fi
+
+echo =============================================================
+echo Array - Implementation Results [using random initial vector]:
+echo =============================================================
+if [ "$#" = 2 ]; then
+	./ex2 m_input.arr m_eigen_vector.arr -array > /dev/null 2>&1
+	./ex2 m_input.arr m_eigen_vector.arr -array
+	./tester -check m_input.arr m_eigen_vector.arr -array
+else
+	valgrind --log-fd=1 ./ex2 m_input.arr m_eigen_vector.arr -array
+fi
+echo =============================================================
+
+rm -rf m_input.arr m_input_vector.arr m_eigen_vector.arr

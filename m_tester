@@ -1,0 +1,10 @@
+if [ "$#" = 3 ]; then
+	m_script $1 $2 $3 > m_output
+	grep 'in use at exit:\|Implementation Results\|============================\|total heap usage\|ERROR SUMMARY' m_output
+else
+	m_script $1 $2 > m_output
+	grep 'seconds\|Implementation Results\|============================' m_output
+fi
+
+make clean > /dev/null 2>&1
+rm -rf m_output
